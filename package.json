@@ -1,0 +1,19 @@
+{
+  "name": "learnnodejs",
+  "version": "1.0.0",
+  "description": "You can use the [editor on GitHub](https://github.com/GopiTheContributer/LearnNodeJs/edit/master/README.md) to maintain and preview the content for your website in Markdown files.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GopiTheContributer/LearnNodeJs.git"
+  },
+  "author": "Gopi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GopiTheContributer/LearnNodeJs/issues"
+  },
+  "homepage": "https://github.com/GopiTheContributer/LearnNodeJs#readme"
+}
