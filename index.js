@@ -12,10 +12,10 @@ app.use(bodyParser.json());
 
 // voters route register
 const voters_route = require('./routes/voters');
-const ec_route = require("./routes/electioncommisioner");
+// const ec_route = require("./routes/electioncommisioner");
 
 app.use('/voter', voters_route);
-app.use("/ec", ec_route);
+// app.use("/ec", ec_route);
 
 app.listen(port, () => {
   console.log("server started");
