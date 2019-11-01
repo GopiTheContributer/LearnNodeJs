@@ -6,14 +6,10 @@ const { RegisterVoters } = require("../api/voters/voters.api");
 const { registerValidator } = require("../middleware/voters.middleware");
 
 route.post("/register", registerValidator, (req, res) => {
-  console.log("in /register method in");
-  if (RegisterVoters(req.body)) {
+  if (!RegisterVoters(req.body)) {
     return res.send("failure");
   }
-
-  console.log("in /register method out");
-  return res.send("Success");
-
+  return res.send("success");
 });
 
 module.exports = route;

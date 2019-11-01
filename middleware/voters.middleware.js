@@ -3,12 +3,12 @@
 let registerValidator = (req, res, next) => {
     console.log("in /register middleware method in");
   if (
-    req.body.mail == null ||
-    req.body.pass == null ||
-    req.body.voterid == null ||
+    req.body.email == null ||
+    req.body.password == null ||
+    req.body.voter_id == null ||
     req.body.name == null ||
     req.body.address == null ||
-    req.body.phoneno == null
+    req.body.phone_no == null
   ) {
     let err = new Error("required data not sent");
     return next(err);
