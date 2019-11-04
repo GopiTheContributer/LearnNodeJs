@@ -1,7 +1,6 @@
 "user strict";
 
 let registerValidator = (req, res, next) => {
-    console.log("in /register middleware method in");
   if (
     req.body.email == null ||
     req.body.password == null ||
@@ -13,8 +12,16 @@ let registerValidator = (req, res, next) => {
     let err = new Error("required data not sent");
     return next(err);
   }
-  console.log("in /register middleware method out");
+  return next();
+};
+
+let loginValidator = (req, res, next) => {
+  if (req.body.username == null || req.body.password == null) {
+    let err = new Error("required data not sent");
+    return next(err);
+  }
   return next();
 };
 
 module.exports.registerValidator = registerValidator;
+module.exports.loginValidator = loginValidator;
