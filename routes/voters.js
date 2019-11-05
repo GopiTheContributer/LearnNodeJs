@@ -3,8 +3,14 @@
 const express = require("express");
 const route = express.Router();
 const {
+  RegisterVoters,
+  loginVoters,
+  castVotes
+} = require("../api/voters/voters.api");
+const {
   registerValidator,
-  loginValidator
+  loginValidator,
+  castVoteValidator
 } = require("../middleware/voters.middleware");
 
 route.post("/register", registerValidator, (req, res) => {
@@ -15,10 +21,17 @@ route.post("/register", registerValidator, (req, res) => {
 });
 
 route.get("/login", loginValidator, (req, res) => {
-  if (!loginVoters(req.body.username, req.body.password)) {
+  if (!castVote(req.body)) {
     return res.send("Login failure");
   }
   return res.send("Login success");
+});
+
+route.post("/castvote", castVoteValidator, (req, res) => {
+  if (!castVotes(req.body)) {
+    return res.send("failure");
+  }
+  return res.send("success");
 });
 
 module.exports = route;

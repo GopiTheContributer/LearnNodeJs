@@ -39,5 +39,18 @@ let loginVoters = (username, password) => {
     });
 };
 
+let castVotes = content => {
+  let sqlQuery = "insert into votes set ?";
+  let conn = connection();
+  conn.query(sqlQuery, content, function(err, result) {
+    if (err) {
+      console.log(`query execution fail: ${err.stack}`);
+      return false;
+    }
+  });
+  return true;
+};
+
 module.exports.RegisterVoters = registerVoters;
 module.exports.loginVoters = loginVoters;
+module.exports.castVotes = castVotes;

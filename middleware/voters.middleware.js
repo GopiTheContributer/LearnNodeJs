@@ -1,5 +1,7 @@
 "user strict";
 
+const constant = require("../utils/constant");
+
 let registerValidator = (req, res, next) => {
   if (
     req.body.email == null ||
@@ -9,19 +11,31 @@ let registerValidator = (req, res, next) => {
     req.body.address == null ||
     req.body.phone_no == null
   ) {
-    let err = new Error("required data not sent");
-    return next(err);
+    return next(new Error(constant.requiredDataError));
   }
   return next();
 };
 
 let loginValidator = (req, res, next) => {
   if (req.body.username == null || req.body.password == null) {
-    let err = new Error("required data not sent");
-    return next(err);
+    return next(new Error(constant.requiredDataError));
+  }
+  return next();
+};
+
+let castVoteValidator = (req, res, next) => {
+  if (
+    req.body.year == null ||
+    req.body.state_id ||
+    req.body.user_id == null ||
+    req.body.district_id == null ||
+    req.body.candidate_id == null
+  ) {
+    return next(new Error(constant.requiredDataError));
   }
   return next();
 };
 
 module.exports.registerValidator = registerValidator;
 module.exports.loginValidator = loginValidator;
+module.exports.castVoteValidator = castVoteValidator;
