@@ -2,7 +2,6 @@
 
 const express = require("express");
 const route = express.Router();
-const { ApproveVoters } = require("../api/election_commissioner/ec.api");
 const {
   registerValidator,
   loginValidator
