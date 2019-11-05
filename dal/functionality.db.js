@@ -32,7 +32,7 @@ let getPassword = username => {
         console.log("promise " + err.stack);
         return reject(err);
       }
-      
+
       if (result.length == 0) {
         let error = new Error("user not registered with EMS");
         return reject(error);
@@ -42,5 +42,20 @@ let getPassword = username => {
   });
 };
 
+let isAlreadyVoteCasted = voterID => {
+  let sqlQuery = `select user_id from votes where user_id = ${voterID}`;
+  let con = connection();
+  con.query(sqlQuery, (err, result) => {
+    if (err) {
+      return false;
+    }
+    if (result.length == 0) {
+      return false;
+    }
+    return true;
+  });
+};
+
 module.exports.isUserRegistered = isRegistered;
 module.exports.getPassword = getPassword;
+module.exports.isAlreadyVoteCasted = isAlreadyVoteCasted;

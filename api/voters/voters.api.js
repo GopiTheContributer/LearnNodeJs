@@ -2,7 +2,11 @@
 
 const { connection } = require("../../dal/connection");
 const constant = require("../../utils/constant");
-const { isUserRegistered, getPassword } = require("../../dal/functionality.db");
+const {
+  isUserRegistered,
+  getPassword,
+  isAlreadyVoteCasted
+} = require("../../dal/functionality.db");
 const sql = require("mysql");
 const bcrypt = require("bcrypt");
 
@@ -41,6 +45,10 @@ let loginVoters = (username, password) => {
 
 let castVotes = content => {
   let sqlQuery = "insert into votes set ?";
+  if (!isAlreadyVoteCasted(content.voter_id)) {
+    console.log("user already casted voted");
+    return false;
+  }
   let conn = connection();
   conn.query(sqlQuery, content, function(err, result) {
     if (err) {
