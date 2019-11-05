@@ -2,7 +2,7 @@
 
 const express = require("express");
 const route = express.Router();
-const { RegisterVoters, loginVoters } = require("../api/voters/voters.api");
+const { ApproveVoters } = require("../api/election_commissioner/ec.api");
 const {
   registerValidator,
   loginValidator
