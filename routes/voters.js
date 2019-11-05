@@ -2,7 +2,7 @@
 
 const express = require("express");
 const route = express.Router();
-const { RegisterVoters } = require("../api/voters/voters.api");
+const { RegisterVoters, loginVoters } = require("../api/voters/voters.api");
 const {
   registerValidator,
   loginValidator
@@ -16,7 +16,10 @@ route.post("/register", registerValidator, (req, res) => {
 });
 
 route.get("/login", loginValidator, (req, res) => {
-  
+  if (!loginVoters(req.body.username, req.body.password)) {
+    return res.send("Login failure");
+  }
+  return res.send("Login success");
 });
 
 module.exports = route;

@@ -20,4 +20,27 @@ let isRegistered = voterid => {
   });
 };
 
+let getPassword = username => {
+  let sqlQuery = `select password from register where email = ${sql.escape(
+    username
+  )}`;
+  let con = connection();
+
+  return new Promise((resolve, reject) => {
+    con.query(sqlQuery, (err, result) => {
+      if (err) {
+        console.log("promise " + err.stack);
+        return reject(err);
+      }
+      
+      if (result.length == 0) {
+        let error = new Error("user not registered with EMS");
+        return reject(error);
+      }
+      resolve(result);
+    });
+  });
+};
+
 module.exports.isUserRegistered = isRegistered;
+module.exports.getPassword = getPassword;

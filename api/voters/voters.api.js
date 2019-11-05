@@ -2,8 +2,9 @@
 
 const { connection } = require("../../dal/connection");
 const constant = require("../../utils/constant");
-const { isUserRegistered } = require("../../dal/functionality.db");
+const { isUserRegistered, getPassword } = require("../../dal/functionality.db");
 const sql = require("mysql");
+const bcrypt = require("bcrypt");
 
 let registerVoters = content => {
   if (!isUserRegistered(content.voter_id)) {
@@ -22,20 +23,21 @@ let registerVoters = content => {
   return true;
 };
 
-let login = (username, password) => {
-  const bcrypt = require("bcrypt");
-  content.password = bcrypt.compareSync(password, dsaf);
-  let sqlQuery = `select name from register where email = ${sql.escape(
-    username
-  )} and password = ${sql.escape(password)}`;
-  let conn = connection();
-  conn.query(sqlQuery, function(err, result) {
-    if (err) {
-      console.log(`query execution fail: ${err.stack}`);
+let loginVoters = (username, password) => {
+  getPassword(username)
+    .then(data => {
+      if (bcrypt.compareSync(password, data[0].password)) {
+        console.log("password is correct");
+        return true;
+      }
+      console.log("incorrect password");
       return false;
-    }
-  });
+    })
+    .catch(error => {
+      console.log(`promise rejectd error -- ${error.stack}`);
+      return false;
+    });
 };
 
 module.exports.RegisterVoters = registerVoters;
-module.exports.Login = login;
+module.exports.loginVoters = loginVoters;
