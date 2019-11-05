@@ -1,20 +1,34 @@
 "use strict";
 
+const { constant } = require("../utils/constant");
+
 let approveValidator = (req, res, next) => {
   if (req.body.ids == null) {
-    let err = new Error("required data not sent");
-    return next(err);
+    return next(new Error(constant.requiredDataError));
   }
   return next();
 };
 
 let mpSeatValidator = (req, res, next) => {
   if (req.body.seats == null || req.body.stateid == null) {
-    let err = new Error("required data not sent");
-    return next(err);
+    return next(new Error(constant.requiredDataError));
+  }
+  return next();
+};
+
+let registerCandidatesValidator = (req, res, next) => {
+  if (
+    req.body.year == null ||
+    req.body.state_id == null ||
+    req.body.party_id == null ||
+    req.body.district_id == null ||
+    req.body.candidate_id == null
+  ) {
+    return next(new Error(constant.requiredDataError));
   }
   return next();
 };
 
 module.exports.mpSeatValidator = mpSeatValidator;
 module.exports.approveValidator = approveValidator;
+module.exports.registerCandidatesValidator = registerCandidatesValidator;

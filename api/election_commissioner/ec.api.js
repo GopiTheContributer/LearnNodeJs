@@ -31,7 +31,7 @@ let updateMpSeats = content => {
 let getStatesandSeats = () => {
   let sqlQuery =
     "select name as Name, total_mp_seats as 'Total Seats' from states";
-  let con = openConnection();
+  let con = connection();
   return new Promise((resolve, reject) => {
     con.query(sqlQuery, (error, result) => {
       if (error) {
@@ -42,6 +42,19 @@ let getStatesandSeats = () => {
   });
 };
 
+let registerCandidates = content => {
+  let sqlQuery = "insert into election_candidates set ?";
+  let con = connection();
+  con.query(sqlQuery, content, function(err, result) {
+    if (err) {
+      console.log(`query execution failed ${err.stack}`);
+      return false;
+    }
+  });
+  return true;
+};
+
 module.exports.updateMpSeats = updateMpSeats;
 module.exports.approveVoters = approveVoters;
 module.exports.getStatesandSeats = getStatesandSeats;
+module.exports.registerCandidates = registerCandidates;

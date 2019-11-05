@@ -7,6 +7,9 @@ let connectionDetails = {
 };
 const saltRounds = 10;
 
+const requiredDataError = "required data not sent";
+
 module.exports.saltLength = saltRounds;
 module.exports.port_number = port;
 module.exports.dbConnection = connectionDetails;
+module.exports.requiredDataError = requiredDataError;

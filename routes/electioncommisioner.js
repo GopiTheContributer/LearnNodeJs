@@ -4,12 +4,14 @@ const express = require("express");
 const route = express.Router();
 const {
   approveValidator,
-  mpSeatValidator
+  mpSeatValidator,
+  registerCandidatesValidator
 } = require("../middleware/ec.middleware");
 const {
   approveVoters,
   updateMpSeats,
-  getStatesandSeats
+  getStatesandSeats,
+  registerCandidates
 } = require("../api/election_commissioner/ec.api");
 
 route.put("/approve", approveValidator, (req, res) => {
@@ -31,13 +33,25 @@ route.get("/getstatesandseats", (req, res) => {
     .then(results => {
       if (results.length > 0) {
         res.send(results);
+        return;
       }
-      throw new Error("No Result Found");
+      res.send("No result found");
     })
     .catch(error => {
       console.log(`Exception Occurred ${error.stack}`);
       res.send("Exception occurrec " + error.stack);
     });
 });
+
+route.post(
+  "/registerelectioncandidates",
+  registerCandidatesValidator,
+  (req, res) => {
+    if (!registerCandidates(req.body)) {
+      return res.send("failure");
+    }
+    return res.send("success");
+  }
+);
 
 module.exports = route;
