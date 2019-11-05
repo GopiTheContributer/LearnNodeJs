@@ -8,7 +8,8 @@ const {
 } = require("../middleware/ec.middleware");
 const {
   approveVoters,
-  updateMpSeats
+  updateMpSeats,
+  getStatesandSeats
 } = require("../api/election_commissioner/ec.api");
 
 route.put("/approve", approveValidator, (req, res) => {
@@ -26,17 +27,17 @@ route.put("/changempseats", mpSeatValidator, (req, res) => {
 });
 
 route.get("/getstatesandseats", (req, res) => {
-  let sqlQuery =
-    "select name as Name, total_mp_seats as 'Total Seats' from states";
-  let con = openConnection();
-  con.query(sqlQuery, (error, result) => {
-    if (error) {
-      return res.send({
-        error: "Query execution unsuccessfull " + error.stack
-      });
-    }
-    res.send(result);
-  });
+  getStatesandSeats()
+    .then(results => {
+      if (results.length > 0) {
+        res.send(results);
+      }
+      throw new Error("No Result Found");
+    })
+    .catch(error => {
+      console.log(`Exception Occurred ${error.stack}`);
+      res.send("Exception occurrec " + error.stack);
+    });
 });
 
 module.exports = route;
