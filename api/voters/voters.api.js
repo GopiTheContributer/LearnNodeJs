@@ -7,17 +7,16 @@ const {
   getPassword,
   isAlreadyVoteCasted
 } = require("../../dal/functionality.db");
-const sql = require("mysql");
 const bcrypt = require("bcrypt");
 
-let registerVoters = content => {
+const registerVoters = content => {
   if (!isUserRegistered(content.voter_id)) {
     console.log("user already registered with the application");
     return false;
   }
   content.password = bcrypt.hashSync(content.password, constant.saltLength);
   let sqlQuery = "insert into register set ?";
-  let conn = connection();
+  const conn = connection();
   conn.query(sqlQuery, content, function(err, result) {
     if (err) {
       console.log(`query execution fail: ${err.stack}`);
@@ -27,7 +26,7 @@ let registerVoters = content => {
   return true;
 };
 
-let loginVoters = (username, password) => {
+const loginVoters = (username, password) => {
   getPassword(username)
     .then(data => {
       if (bcrypt.compareSync(password, data[0].password)) {
@@ -43,13 +42,13 @@ let loginVoters = (username, password) => {
     });
 };
 
-let castVotes = content => {
+const castVotes = content => {
   let sqlQuery = "insert into votes set ?";
   if (!isAlreadyVoteCasted(content.voter_id)) {
     console.log("user already casted voted");
     return false;
   }
-  let conn = connection();
+  const conn = connection();
   conn.query(sqlQuery, content, function(err, result) {
     if (err) {
       console.log(`query execution fail: ${err.stack}`);

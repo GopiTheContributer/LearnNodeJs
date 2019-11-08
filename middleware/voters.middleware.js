@@ -2,7 +2,7 @@
 
 const constant = require("../utils/constant");
 
-let registerValidator = (req, res, next) => {
+const registerValidator = (req, res, next) => {
   if (
     req.body.email == null ||
     req.body.password == null ||
@@ -16,14 +16,14 @@ let registerValidator = (req, res, next) => {
   return next();
 };
 
-let loginValidator = (req, res, next) => {
+const loginValidator = (req, res, next) => {
   if (req.body.username == null || req.body.password == null) {
     return next(new Error(constant.requiredDataError));
   }
   return next();
 };
 
-let castVoteValidator = (req, res, next) => {
+const castVoteValidator = (req, res, next) => {
   if (
     req.body.year == null ||
     req.body.state_id ||

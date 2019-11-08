@@ -1,9 +1,9 @@
 const sql = require("mysql");
-const { dbConnection  } = require('../utils/constant');
+const { dbConnection } = require("../utils/constant");
 
 let connection = null;
 
-let getConnection = function() {
+const getConnection = function() {
   if (connection == null) {
     connection = sql.createConnection(dbConnection);
   }

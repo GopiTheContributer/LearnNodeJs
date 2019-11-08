@@ -3,7 +3,7 @@
 const sql = require("mysql");
 const { connection } = require("./connection");
 
-let isRegistered = voterid => {
+const isRegistered = voterid => {
   let sqlQuery = `select name from register where voter_id=${sql.escape(
     voterid
   )}`;
@@ -20,7 +20,7 @@ let isRegistered = voterid => {
   });
 };
 
-let getPassword = username => {
+const getPassword = username => {
   let sqlQuery = `select password from register where email = ${sql.escape(
     username
   )}`;
@@ -42,7 +42,7 @@ let getPassword = username => {
   });
 };
 
-let isAlreadyVoteCasted = voterID => {
+const isAlreadyVoteCasted = voterID => {
   let sqlQuery = `select user_id from votes where user_id = ${voterID}`;
   let con = connection();
   con.query(sqlQuery, (err, result) => {

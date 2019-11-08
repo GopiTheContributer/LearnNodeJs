@@ -2,21 +2,21 @@
 
 const { constant } = require("../utils/constant");
 
-let approveValidator = (req, res, next) => {
+const approveValidator = (req, res, next) => {
   if (req.body.ids == null) {
     return next(new Error(constant.requiredDataError));
   }
   return next();
 };
 
-let mpSeatValidator = (req, res, next) => {
+const mpSeatValidator = (req, res, next) => {
   if (req.body.seats == null || req.body.stateid == null) {
     return next(new Error(constant.requiredDataError));
   }
   return next();
 };
 
-let registerCandidatesValidator = (req, res, next) => {
+const registerCandidatesValidator = (req, res, next) => {
   if (
     req.body.year == null ||
     req.body.state_id == null ||
