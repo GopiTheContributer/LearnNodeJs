@@ -2,6 +2,7 @@
 
 const express = require("express");
 const route = express.Router();
+const { generateToken } = require("../utils/helper");
 const {
   RegisterVoters,
   loginVoters,
@@ -21,10 +22,11 @@ route.post("/register", registerValidator, (req, res) => {
 });
 
 route.get("/login", loginValidator, (req, res) => {
-  if (!castVote(req.body)) {
+  if (!loginVoters(req.body)) {
     return res.send("Login failure");
   }
-  return res.send("Login success");
+  const token = generateToken(req.body.username);
+  return res.send(200).json({ token: token });
 });
 
 route.post("/castvote", castVoteValidator, (req, res) => {

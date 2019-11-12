@@ -26,10 +26,10 @@ const registerVoters = content => {
   return true;
 };
 
-const loginVoters = (username, password) => {
-  getPassword(username)
+const loginVoters = content => {
+  getPassword(content.username)
     .then(data => {
-      if (bcrypt.compareSync(password, data[0].password)) {
+      if (bcrypt.compareSync(content.password, data[0].password)) {
         console.log("password is correct");
         return true;
       }
